@@ -65,7 +65,9 @@
 # Attempt to set APP_HOME
 
 # Resolve links: $0 may be a link
-app_path=$0
+app_path=$0chmod +x gradlew
+
+chmod +x gradlew
 
 # Need this for daisy-chained symlinks.
 while
