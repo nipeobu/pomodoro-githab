@@ -36,8 +36,8 @@ public class pomodoro {
             }
         }
         if (!isCallHelp) {
-            System.out.printf ("Параметры:\nработаем %d мин\nотдыхаем %d мин\n" +
-                    "кол-во подходов %d\n", workMin, breakMin, count);
+            System.out.printf ("Параметры: работаем %d мин, отдыхаем %d мин, " +
+                    "кол-во подходов %d\n\n", workMin, breakMin, count);
             long startTime = System.currentTimeMillis();
             // timer
             for (int i = 1; i <= count; i++) {
