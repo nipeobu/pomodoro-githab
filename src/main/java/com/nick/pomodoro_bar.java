@@ -6,14 +6,17 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class pomodoro {
+
+public class pomodoro_bar {
+
     static boolean isTest = false;
-    static String inTime[] = {"25", "5", "1", "1"};
+    static String[] inTime = {"25", "5", "1", "1"};
 
     public static void main(String[] args) throws InterruptedException {
-        System.out.println("Ehi, pomodoro! Напиши команду.");
-        String cmd1 = new Scanner(System.in).nextLine();
+//        System.out.println("Ehi, pomodoro! Напиши команду.");
+//        String[] cmd = new Scanner(System.in).nextLine().split(" ");
 
+        String cmd1 = "vgh  -w  5 +hjk   -lxr  m";
         while (cmd1.contains("  ")) {
             String replace = cmd1.replace("  ", " ");
             cmd1 = replace;
@@ -45,18 +48,10 @@ public class pomodoro {
                         printHelpMsg();
                         isCallHelp = true;
                     }
-                    case "w" -> {
-                        workMin = Integer.parseInt(cmd[++i]);
-                    }
-                    case "b" -> {
-                        breakMin = Integer.parseInt(cmd[++i]);
-                    }
-                    case "c" -> {
-                        count = Integer.parseInt(cmd[++i]);
-                    }
-                    case "m" -> {
-                        koeff = 2;  //Integer.parseInt(cmd[++i]);
-                    }
+                    case "w" -> workMin = Integer.parseInt(cmd[++i]);
+                    case "b" -> breakMin = Integer.parseInt(cmd[++i]);
+                    case "c" -> count = Integer.parseInt(cmd[++i]);
+                    case "m" -> koeff = 2;  //Integer.parseInt(cmd[++i]);
                     case "t" -> {
                         System.out.println("Произвольное время на работу и отдых!");
                         isTest = true;
@@ -78,6 +73,7 @@ public class pomodoro {
             long endTime = System.currentTimeMillis();
             System.out.println("Pomodoro таймер истек " + (endTime - startTime)/(1000*60) + " мин");
         }
+    // end main
     }
 
     private static boolean isCallFlag(String @NotNull [] cmd)  {
@@ -101,9 +97,9 @@ public class pomodoro {
             }
             if (CallHelp_w) {
                 for (int i = 0; i < cmd.length; i++) {
-                    if (cmd[i].equals("-h") || cmd[i].equals("h") || cmd[i].equals("-?") || cmd[i].equals("t") || cmd[i].equals("-t")) {
+                    if (Objects.equals(cmd[i].charAt(0), 'h') || Objects.equals(cmd[i].charAt(0), 't') || Objects.equals(cmd[i].charAt(0), '?')) {
                         CallHelp = false;
-                    } else if (cmd[i].equals("-w") || cmd[i].equals("w") || cmd[i].equals("-b") || cmd[i].equals("b") || cmd[i].equals("-c") || cmd[i].equals("c")) {
+                    } else if (Objects.equals(cmd[i].charAt(0), 'w') || Objects.equals(cmd[i].charAt(0), 'b') || Objects.equals(cmd[i].charAt(0), 'c')) {
                         CallHelp = false;
                         int k = Integer.parseInt(cmd[i + 1]);
                         // System.out.println(cmd[i] + " " + k);
@@ -127,7 +123,8 @@ public class pomodoro {
     }
 
     private static void printProgress(String process, int time, int size) throws InterruptedException {
-        int length = 60 * time / size;
+        int length;
+        length = 60 * time / size;
         for (int i = 1; i <= size; i++) {
             String x = String.format("%.1f", i * time * 1.0 / size);
             String percent = String.format("%.1f", i * 100.0 / size);
@@ -155,4 +152,6 @@ public class pomodoro {
         System.out.println(
                 "\t-t или t  :\t\t\tпроизвольное время на работу и отдых! таймер не включается.\n");
     }
+// end class
 }
+
