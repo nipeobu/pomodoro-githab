@@ -1,27 +1,21 @@
 package com.nick;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-
 public class pomodoro_bar {
-
     static boolean isTest = false;
     static String[] inTime = {"25", "5", "1", "1"};
-
     public static void main(String[] args) throws InterruptedException {
+
 //        System.out.println("Ehi, pomodoro! Напиши команду.");
 //        String[] cmd = new Scanner(System.in).nextLine().split(" ");
 
-        String cmd1 = "vgh  -w  5 +hjk   -lxr  m";
-        while (cmd1.contains("  ")) {
-            String replace = cmd1.replace("  ", " ");
-            cmd1 = replace;
-        }
+        String cmd1 = "+hjk c  3 w   2 -lxr  m";
+        if (Objects.equals(cmd1, "")) { cmd1 = "h"; }
 
+        cmd1 = getString(cmd1);
         String[] cmd = cmd1.split(" ");
 
         boolean isCallHelp = false;
@@ -37,7 +31,6 @@ public class pomodoro_bar {
 
         boolean flag = isCallFlag(cmd);
 
-        System.out.println();
         // длина прогресс-бара
         int sizePrint = 30;
 
@@ -51,7 +44,7 @@ public class pomodoro_bar {
                     case "w" -> workMin = Integer.parseInt(cmd[++i]);
                     case "b" -> breakMin = Integer.parseInt(cmd[++i]);
                     case "c" -> count = Integer.parseInt(cmd[++i]);
-                    case "m" -> koeff = 2;  //Integer.parseInt(cmd[++i]);
+                    case "m" -> koeff = 2;
                     case "t" -> {
                         System.out.println("Произвольное время на работу и отдых!");
                         isTest = true;
@@ -59,8 +52,9 @@ public class pomodoro_bar {
                 }
             }
         }
-
+        if (count == 1) { koeff = 1; }
         if (flag) { System.out.println("He вepный формат!"); }
+
         if (!isCallHelp && !isTest && !flag) {
             System.out.printf ("Параметры: работаем %d мин, отдыхаем %d мин, " +
                     "кол-во подходов %d, коэффициент %d\n\n", workMin, breakMin, count, koeff);
@@ -75,17 +69,15 @@ public class pomodoro_bar {
         }
     // end main
     }
-
+    private static String getString(@NotNull String cmd1) {
+        while (cmd1.contains("  ")) {cmd1 = cmd1.replace("  ", " ");}
+        while (cmd1.contains("-")) {cmd1 = cmd1.replace("-", "");}
+        return cmd1;
+    }
     private static boolean isCallFlag(String @NotNull [] cmd)  {
-
         boolean CallHelp = true;
-        boolean CallHelp_w = false;
         try {
             for (int j = 0; j < cmd.length; j++) {
-                if (Objects.equals(cmd[j].charAt(0), '-')) {
-                    cmd[j] = new String(cmd[j].toCharArray(), 1, 1).toLowerCase();
-                }
-                if (Objects.equals(cmd[j].charAt(0), 'w')) { CallHelp_w = true;}
                 if (Objects.equals(cmd[j].charAt(0), '0')) {
                     System.out.println(cmd[j] + " " + cmd[j-1]);
                     switch (cmd[j-1]) {
@@ -95,18 +87,14 @@ public class pomodoro_bar {
                     }
                 }
             }
-            if (CallHelp_w) {
-                for (int i = 0; i < cmd.length; i++) {
-                    if (Objects.equals(cmd[i].charAt(0), 'h') || Objects.equals(cmd[i].charAt(0), 't') || Objects.equals(cmd[i].charAt(0), '?')) {
-                        CallHelp = false;
-                    } else if (Objects.equals(cmd[i].charAt(0), 'w') || Objects.equals(cmd[i].charAt(0), 'b') || Objects.equals(cmd[i].charAt(0), 'c')) {
-                        CallHelp = false;
-                        int k = Integer.parseInt(cmd[i + 1]);
-                        // System.out.println(cmd[i] + " " + k);
-                    }
+            for (int i = 0; i < cmd.length; i++) {
+                if (Objects.equals(cmd[i].charAt(0), 'h') || Objects.equals(cmd[i].charAt(0), 't') || Objects.equals(cmd[i].charAt(0), '?')) {
+                    CallHelp = false;
+                } else if (Objects.equals(cmd[i].charAt(0), 'w') || Objects.equals(cmd[i].charAt(0), 'b') || Objects.equals(cmd[i].charAt(0), 'c')) {
+                    CallHelp = false;
+                    int k = Integer.parseInt(cmd[i + 1]);
                 }
             }
-            else { CallHelp = false;}
         } catch (ArrayIndexOutOfBoundsException e) {
             CallHelp = true;
 //            System.out.println("He вepный формат 2");
@@ -116,12 +104,10 @@ public class pomodoro_bar {
         }
         return CallHelp;
     }
-
     private static void timer(int workTime, int breakTime, int sizeProgressBar) throws InterruptedException {
         printProgress("Работаем:: ", workTime, sizeProgressBar);
         printProgress("Отдыхаем:: ", breakTime, sizeProgressBar);
     }
-
     private static void printProgress(String process, int time, int size) throws InterruptedException {
         int length;
         length = 60 * time / size;
@@ -135,7 +121,6 @@ public class pomodoro_bar {
         }
         System.out.println();
     }
-
     private static void printHelpMsg() {
         System.out.println(
                 "\nPomodoro - сделай свое время более эффективным!");
