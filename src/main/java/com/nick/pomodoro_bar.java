@@ -115,9 +115,10 @@ public class pomodoro_bar {
             String x = String.format("%.1f", i * time * 1.0 / size);
             String percent = String.format("%.1f", i * 100.0 / size);
             System.out.print(process + percent + "% " + (" ").repeat(5 - percent.length()) + "[" + ("#").repeat(i) + ("-").repeat(size - i) + "]    ( " + x + "min / " + time + "min )" + "\r");
-            if (!isTest) {
-                TimeUnit.SECONDS.sleep(length);
-            }
+//            if (!isTest) {
+//                TimeUnit.SECONDS.sleep(length);
+//            }
+            TimeUnit.SECONDS.sleep(length);
         }
         System.out.println();
     }
