@@ -15,7 +15,7 @@ public class pomodoro {
 
         if (Objects.equals(cmd1, "")) { cmd1 = "h"; }
 
-        cmd1 = getString(cmd1);
+        cmd1 = getString(cmd1).toLowerCase();
 
         String[] cmd = cmd1.split(" ");
 

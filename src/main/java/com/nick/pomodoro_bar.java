@@ -12,10 +12,10 @@ public class pomodoro_bar {
 //        System.out.println("Ehi, pomodoro! Напиши команду.");
 //        String[] cmd = new Scanner(System.in).nextLine().split(" ");
 
-        String cmd1 = "+hjk c  3 w   2 -lxr  m";
+        String cmd1 = "+hjk c  3 W   2 -lxr  M";
         if (Objects.equals(cmd1, "")) { cmd1 = "h"; }
 
-        cmd1 = getString(cmd1);
+        cmd1 = getString(cmd1).toLowerCase();
         String[] cmd = cmd1.split(" ");
 
         boolean isCallHelp = false;
